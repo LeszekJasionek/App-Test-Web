@@ -8,5 +8,9 @@ namespace App_Test_Web.Services.Interfaces
 
         List<Product> GetAll();
 
+        Product GetSingle(int id);
+
+        int Delete(int id);
+
     }
 }

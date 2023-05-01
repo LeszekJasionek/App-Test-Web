@@ -1,0 +1,26 @@
+﻿@model IEnumerable<App_Test_Web.Models.Product>
+
+<h1>List of product's'</h1>
+
+<ol>
+    @foreach(var product in Model)
+    {
+        <li>
+            <b>@product.Name</b> - @product.Category
+            <a href="@Url.Action("Details","Warehouse", new { Id = product.Id})">Details</a>
+            @using (Html.BeginForm("Delete", "Warehouse", FormMethod.Post))
+            {
+                <input type="hidden" name="Id" value="@product.Id" />
+                <button type="submit">Delete</button>
+            }
+            @using (Html.BeginForm("Edit", "Warehouse", FormMethod.Get))
+            {
+                <input type="hidden" name="Id" value="@product.Id" />
+                <button type="submit">Edit</button>
+            }
+        </li>
+    }
+
+
+</ol>
+

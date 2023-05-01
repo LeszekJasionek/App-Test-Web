@@ -39,7 +39,39 @@ namespace App_Test_Web.Controllers
             ViewData["ProductId"] = id;
             TempData["ProductId"] = id;
 
-            return RedirectToAction("Add");
+            return RedirectToAction("List");
+        }
+
+        [HttpGet]
+        public IActionResult List()
+        {
+            var products = _warehouseService.GetAll();
+            return View(products);
+        }
+
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            var productId = _warehouseService.GetSingle(id);
+            return View(productId);
+        }
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            _warehouseService.Delete(id);
+            return RedirectToAction("List");
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var editedProduct = _warehouseService.EditProduct();
+
+            if(editedProduct == null)
+            {
+                return NotFound();
+            }
+            return RedirectToAction("Edit");
         }
 
     }
