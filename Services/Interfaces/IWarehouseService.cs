@@ -6,5 +6,7 @@ namespace App_Test_Web.Services.Interfaces
     {
         int Save(Product product);
 
+        List<Product> GetAll();
+
     }
 }
