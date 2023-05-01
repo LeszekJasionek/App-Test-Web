@@ -1,6 +1,8 @@
 using App_Test_Web;
+using App_Test_Web.Models;
 using App_Test_Web.Services;
 using App_Test_Web.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,11 +11,21 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IWarehouseService, WarehouseService>();
 
-builder.Services.AddDbContext<DbTestContext>(opt =>
+builder.Services.AddDbContext<DbTestContext>(options =>
 {
     // opt.UseSqlite(builder.Configuration.GetConnectionString("SqLiteConnectionString"));
-    opt.UseSqlServer("Server=KOMPUTER02\\SERVERMAIN;Database=apptestdbsql;Trusted_Connection=True;TrustServerCertificate=true");
+    options.UseSqlServer("Server=KOMPUTER02\\SERVERMAIN;Database=apptestdbsql;Trusted_Connection=True;TrustServerCertificate=true");
 });
+
+builder.Services.AddIdentity<UserModel, IdentityRole>(options =>
+{
+    options.Password.RequireDigit = false;
+    options.Password.RequiredLength = 2;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireLowercase = false;
+
+}).AddEntityFrameworkStores<DbTestContext>();
 
 var app = builder.Build();
 
@@ -30,6 +42,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

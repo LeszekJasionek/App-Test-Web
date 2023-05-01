@@ -1,10 +1,12 @@
 ﻿using App_Test_Web.Models;
 using App_Test_Web.Services;
 using App_Test_Web.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace App_Test_Web.Controllers
 {
+    [Authorize]
     public class WarehouseController : Controller
     {
         private readonly IWarehouseService _warehouseService;
@@ -62,17 +64,6 @@ namespace App_Test_Web.Controllers
             return RedirectToAction("List");
         }
 
-        [HttpGet]
-        public IActionResult Edit(int id)
-        {
-            var editedProduct = _warehouseService.EditProduct();
-
-            if(editedProduct == null)
-            {
-                return NotFound();
-            }
-            return RedirectToAction("Edit");
-        }
 
     }
 }
