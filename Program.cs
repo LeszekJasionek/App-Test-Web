@@ -13,8 +13,8 @@ builder.Services.AddScoped<IWarehouseService, WarehouseService>();
 
 builder.Services.AddDbContext<DbTestContext>(options =>
 {
-    // opt.UseSqlite(builder.Configuration.GetConnectionString("SqLiteConnectionString"));
-    options.UseSqlServer("Server=KOMPUTER02\\SERVERMAIN;Database=apptestdbsql;Trusted_Connection=True;TrustServerCertificate=true");
+    options.UseSqlite(builder.Configuration.GetConnectionString("SqLiteConnectionString"));
+    // options.UseSqlServer("Server=KOMPUTER02\\SERVERMAIN;Database=apptestdbsql;Trusted_Connection=True;TrustServerCertificate=true");
 });
 
 builder.Services.AddIdentity<UserModel, IdentityRole>(options =>
